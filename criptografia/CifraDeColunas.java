@@ -83,8 +83,8 @@ public class CifraDeColunas
  	/**
  	 * Obter menor valor de um vetor, no caso, da chave.
  	 * 
- 	 * @param vetor
- 	 * @return
+ 	 * @param vetor Vetor com o a chave.
+ 	 * @return posicao Posicao do menor valor do vetor.
  	 */
  	public static int obterPosicaoComMenorValor(int [] vetor) 
  	{ 		
@@ -108,10 +108,11 @@ public class CifraDeColunas
  	/**
  	 * Método para criar tabela de caracteres.
  	 * 
- 	 * @param {@code}palavra
- 	 * @param {@code}linhas
- 	 * @param {@code}colunas
- 	 * @return
+ 	 * @param {@code palavra}
+ 	 * @param {@code linhas}
+ 	 * @param {@code colunas}
+	 *
+ 	 * @return matrix Matriz de caracteres.
  	 */
 	public static char [][] criarTabela(String palavra, int linhas, int colunas)
 	{		
