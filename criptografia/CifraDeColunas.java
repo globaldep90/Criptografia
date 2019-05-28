@@ -4,29 +4,32 @@ public class CifraDeColunas
 {		
 	private String chave;
 	private int tamanhoChave;
+	private int colunas;
 	
 	public CifraDeColunas()
 	{
 		chave   = "";
 		this.tamanhoChave = -1;
+		colunas = 0;
 	}
 	
 	public CifraDeColunas(String chave) 
 	{		
 		this.chave   = chave;
 		this.tamanhoChave = chave.length();
+		this.colunas = this.tamanhoChave;		
 	}
 	
 	/**
 	 * Método para tranformar chave em vetor de inteiros
 	 */
-	public int [] transformarChave(String chave)
+	public int [] transformarChave()
 	{
-		int [] novaChave = new int [chave.length()];
+		int [] novaChave = new int [this.chave.length()];
 
 		for(int y = 0; y < tamanhoChave; y++)
 		{
-			novaChave[y] = (int)chave.charAt(y);
+			novaChave[y] = (int)this.chave.charAt(y);
 		}//end for		
 
 		return novaChave;
@@ -38,13 +41,12 @@ public class CifraDeColunas
 		int [] novaChave = transformarChave(chave); //transformar chave em um array de inteiros	
 		int tamanhoPalavra = palavra.length();
 		
-		//definir linhas e colunas da matriz
-		double l = tamanhoPalavra/tamanhoChave;
-		int linhas = 1 + (int)Math.ceil(l);
+		//definir linhas e colunas da matriz		
+		int linhas = 1 + (int)Math.ceil(tamanhoPalavra/tamanhoChave);
 		int colunas = tamanhoChave;
 		
 		String novaPalavra = "";		
-		char [][] matriz = criarTabela(palavra, linhas, colunas);		
+		char [][] matriz = criarTabelaCifrar(palavra, linhas, colunas);		
 		int posicao = -1;
 				
 		for(int y = 0; y < this.tamanhoChave; y++) 
@@ -114,7 +116,7 @@ public class CifraDeColunas
 	 *
  	 * @return matrix Matriz de caracteres.
  	 */
-	public static char [][] criarTabela(String palavra, int linhas, int colunas)
+	public static char [][] criarTabelaCifrar(String palavra, int linhas, int colunas)
 	{		
 		char [][] matrix = new char[linhas][colunas];
 		int contador = 0;
@@ -134,10 +136,77 @@ public class CifraDeColunas
 		return matrix;
 
 	}//end criarTabela()
-
-	public String decifrar(String palavra, int chave) 
+	
+ 	/**
+ 	 * Método para criar tabela de caracteres.
+ 	 * 
+ 	 * @param {@code palavra}
+ 	 * @param {@code linhas}
+ 	 * @param {@code colunas}
+	 *
+ 	 * @return matrix Matriz de caracteres.
+ 	 */
+	public static char [][] criarTabelaDecifrar(String palavraCifrada, int linhas, int colunas)
 	{		
-		return palavra;
+		char [][] matrix = new char[linhas][colunas];
+		int contador = 0;
+		int tamanhoPalavra = palavraCifrada.length();
+		int [] vetorChave = criarNovaChave();
+		
+		for(int y = obterPosicaoComMenorValor(novaChave[]))
+		{				
+			for(int z = 0; z < linhas; z++)
+			{
+				matrix[z][y] = palavraCifrada.charAt(contador);
+				
+				if(contador+1 < tamanhoPalavra) 
+				{ 
+					contador++; 
+				}
+				else 
+				{ 
+					z = linhas; 
+					y = colunas; 
+				}
+			}//end for			
+			
+		}//end for
+		
+		return matrix;
+
+	}//end criarTabelaDecifrar()
+
+	public String decifrar(String cifrada) 
+	{		
+		int [] novaChave = transformarChave(chave); //transformar chave em um array de inteiros	
+		int tamanhoPalavra = cifrada.length();
+		
+		//definir linhas e colunas da matriz		
+		int linhas = 1 + (int)Math.ceil(tamanhoPalavra/tamanhoChave);
+		int colunas = tamanhoChave;
+		
+		String decifrada = "";
+		char [][] matriz = criarTabelaDecifrar(cifrada, linhas, colunas);		
+		int posicao = -1;
+				
+		for(int y = 0; y < this.tamanhoChave; y++) 
+		{
+			posicao = obterPosicaoComMenorValor(novaChave);
+			
+			for(int z = 0; z < linhas; z++) 
+			{ 
+				if((int)matriz[z][posicao] != 0) 
+				{
+					novaPalavra = novaPalavra + matriz[z][posicao];
+				}
+			}//end for
+			
+			novaChave[posicao] = -1; //descartar posicao
+			
+		}//end for
+				
+		return decifrada;
+			
 	}
 	
 	

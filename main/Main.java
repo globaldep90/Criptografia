@@ -13,6 +13,7 @@ public class Main
 		CifraDeColunas cdc = new CifraDeColunas(chave);
 		
 		String cifra = cdc.cifrar(palavra);
+		String decifrada = cdc.decifrar(cifra);		
 		
 		System.out.println("Cifrado: " + cifra); 
 						
